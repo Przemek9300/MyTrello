@@ -6,40 +6,56 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using trelloApi.Services;
 using trelloApi.Domains;
+using MediatR;
+using trelloApi.Command;
+using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
+using System.Security.Claims;
 
 namespace trelloApi.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Test")]
+    [Route("api/account")]
     public class AccountController : Controller
     {
-        private readonly IUserService _userService;
-        public AccountController(IUserService userService)
+
+
+        private readonly IMediator _mediator;
+        private readonly ClaimsPrincipal _caller;
+        public AccountController(IMediator mediator, ClaimsPrincipal caller )
         {
-            _userService = userService;
+            _caller = caller;
+            _mediator = mediator;
         }
 
 
         [HttpPost]
-        public IActionResult Post()
+        public async Task<IActionResult> Post(LoginCommand command)
         {
-            User login = new User();
-            IActionResult response = Unauthorized();
-            var user = _userService.Authenticate(login);
 
-            if (user != null)
+            ActionResult response = BadRequest();
+            var result = await _mediator.Send(command);
+            if (!String.IsNullOrEmpty(result))
             {
-                var tokenString = _userService.BuildToken(user);
-                response = Ok(new { token = tokenString });
+                response = Ok(new { TokenString = result });
             }
-
             return response;
         }
-
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            
+            var claims = User.Claims.Select(x => new { x.Type, x.Value }).ToList();
+
+
+            IActionResult result;
+            if (!User.Identity.IsAuthenticated)
+            {
+                return result = Unauthorized();
+            }
+            result = Ok(new { claims });
+            return result;
         }
     }
+    
 }

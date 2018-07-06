@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 using trelloApi.Domains;
 
 namespace trelloApi.Services
@@ -35,9 +36,9 @@ namespace trelloApi.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public User Authenticate(User login)
+        public  User Authenticate(User login)
         {
-            User user = new User();
+            User user = new User(){Email="p",HashPassword="das",Id=Guid.NewGuid()};
 
 
             if (login.Email == "mario" && login.HashPassword == "secret")
@@ -46,14 +47,14 @@ namespace trelloApi.Services
             }
             return user;
         }
-        private IEnumerable<Claim> GetTokenClaims(User user)
+        private List<Claim> GetTokenClaims(User user)
         {
             return new List<Claim>
         {
-        new Claim("UserName", "Gad"),
-        new Claim("Email", "Gad"),
-        new Claim("Name","Przem"),
-        new Claim("Role","Admin")
+            
+        new Claim("Id", user.Id.ToString()),
+        new Claim("UserName", user.Email.ToString()),
+        new Claim("Email", user.Email.ToString()),
 
             //More custom claims
         };
