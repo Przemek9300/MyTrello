@@ -21,30 +21,31 @@ namespace trelloApi.Controllers
 
 
         private readonly IMediator _mediator;
-        private readonly ClaimsPrincipal _caller;
-        public AccountController(IMediator mediator, ClaimsPrincipal caller )
+        public AccountController(IMediator mediator)
         {
-            _caller = caller;
             _mediator = mediator;
         }
 
-
+    
         [HttpPost]
         public async Task<IActionResult> Post(LoginCommand command)
         {
 
             ActionResult response = BadRequest();
-            var result = await _mediator.Send(command);
-            if (!String.IsNullOrEmpty(result))
+            if (ModelState.IsValid)
             {
-                response = Ok(new { TokenString = result });
+                var result = await _mediator.Send(command);
+                {
+                    response = Ok(new { TokenString = result });
+                }
+                return response;
             }
-            return response;
+            return BadRequest(ModelState);
         }
         [HttpGet]
         public IActionResult Get()
         {
-            
+
             var claims = User.Claims.Select(x => new { x.Type, x.Value }).ToList();
 
 
@@ -56,6 +57,17 @@ namespace trelloApi.Controllers
             result = Ok(new { claims });
             return result;
         }
+         [Route("api/register")]
+        [HttpPost]
+        public IActionResult Register([FromBody] RegisterCommand command)
+        {
+
+           if(ModelState.IsValid){
+               _mediator.Send(command);
+               return Ok(command);
+           }
+           return BadRequest(ModelState);
+        }
     }
-    
+
 }

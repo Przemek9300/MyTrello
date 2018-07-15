@@ -4,6 +4,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -16,6 +18,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using trelloApi.Context;
 using trelloApi.Services;
+using trelloApi.Repositories;
 
 namespace trelloApi
 {
@@ -31,8 +34,11 @@ namespace trelloApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddAutoMapper();
+            services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>()) ;;
             services.AddTransient<IUserService, UserSerivce>();
+            services.AddTransient<IUserRepository, UserRepository>();
+
             services.AddMediatR();
             services.AddTransient<ClaimsPrincipal>();
             services.AddDbContext<YettiContext>();

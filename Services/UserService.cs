@@ -7,6 +7,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using trelloApi.Domains;
+using trelloApi.Repositories;
 
 namespace trelloApi.Services
 
@@ -14,10 +15,12 @@ namespace trelloApi.Services
     public class UserSerivce:IUserService
     {
         private readonly IConfiguration _config;
+        private readonly IUserRepository _userRepository;
 
-        public UserSerivce(IConfiguration configuration)
+        public UserSerivce(IConfiguration configuration, IUserRepository userRepositor)
         {
             _config = configuration;
+            _userRepository = userRepositor;
         }
         
   
@@ -58,6 +61,20 @@ namespace trelloApi.Services
 
             //More custom claims
         };
+        }
+
+        public async Task RegisterUser(User user)
+        {
+            
+            await _userRepository.Add(user);
+        }
+
+        public bool UserExist(string Email)
+        {
+            var user = _userRepository.Get(Email);
+            if(user==null)
+                return false;
+            return true;
         }
     }
 }

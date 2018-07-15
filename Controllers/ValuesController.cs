@@ -23,12 +23,10 @@ namespace trelloApi.Controllers
         }
 
         // GET api/values
-        [Authorize]
         [HttpGet]
         public string Get()
         {
 
-            var userId = User.Claims.First(x=> x.Type=="Id").Value;
             
             return "test";
         }
