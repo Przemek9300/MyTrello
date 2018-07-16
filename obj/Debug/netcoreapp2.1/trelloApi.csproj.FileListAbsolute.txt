@@ -11,4 +11,4 @@ C:\Users\przem\Documents\workspace\trelloApi\bin\Debug\netcoreapp2.1\trelloApi.p
 C:\Users\przem\Documents\workspace\trelloApi\obj\Debug\netcoreapp2.1\trelloApi.RazorTargetAssemblyInfo.cache
 C:\Users\przem\Documents\workspace\trelloApi\obj\Debug\netcoreapp2.1\trelloApi.dll
 C:\Users\przem\Documents\workspace\trelloApi\obj\Debug\netcoreapp2.1\trelloApi.pdb
-C:\Users\przem\Documents\workspace\trelloApi\obj\Debug\netcoreapp2.1\trelloApi.csprojResolveAssemblyReference.cache
+C:\Users\przem\Documents\workspace\trelloApi\obj\Debug\netcoreapp2.1\trelloApi.csprojAssemblyReference.cache

@@ -67,7 +67,7 @@ namespace trelloApi.Services
             return new List<Claim>
         {
 
-        new Claim("Id", user.Id.ToString()),
+        new Claim("Id", user.UserId.ToString()),
         new Claim("Email", user.Email.ToString()),
 
             //More custom claims
@@ -78,7 +78,7 @@ namespace trelloApi.Services
         {
             var salt = _passwordService.GetSalt();
             var user = new User() {
-                Id = Guid.NewGuid(),
+                UserId = Guid.NewGuid(),
                 Email = command.Email,
                 Salt = salt,
                 HashPassword = _passwordService.GetHash(command.Password, salt),

@@ -27,7 +27,7 @@ namespace trelloApi.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost("login")]
         public async Task<IActionResult> Post(LoginCommand command)
         {
 
@@ -42,6 +42,25 @@ namespace trelloApi.Controllers
             }
             return BadRequest(ModelState);
         }
+
+    
+       [HttpPost("register")]
+        public async Task<IActionResult> Post(RegisterCommand command)
+        {
+
+            ActionResult response = BadRequest();
+            if (ModelState.IsValid)
+            {
+                var result = await _mediator.Send(command);
+                {
+                    response = Ok(result);
+                }
+                return response;
+            }
+            return BadRequest(ModelState);
+        }
+    
+
         [HttpGet]
         public IActionResult Get()
         {

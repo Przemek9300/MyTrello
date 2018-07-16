@@ -9,12 +9,11 @@ using MediatR;
 using System.Security.Claims;
 
 namespace trelloApi.Controllers
-{
+{   [Authorize]
     [Route("api/[controller]")]
     public class ValuesController : Controller
 
     {
-        private readonly ClaimsPrincipal _caller;
 
         private readonly IMediator _mediator;
         public ValuesController(IMediator mediator)
@@ -23,6 +22,7 @@ namespace trelloApi.Controllers
         }
 
         // GET api/values
+        
         [HttpGet]
         public string Get()
         {

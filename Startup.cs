@@ -19,6 +19,7 @@ using Microsoft.IdentityModel.Tokens;
 using trelloApi.Context;
 using trelloApi.Services;
 using trelloApi.Repositories;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace trelloApi
 {
@@ -39,7 +40,10 @@ namespace trelloApi
             services.AddTransient<IUserService, UserSerivce>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IPasswordService, PasswordService>();
-
+                  services.AddSwaggerGen(c =>  
+      {  
+          c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });  
+      });  
             services.AddMediatR();
             services.AddTransient<ClaimsPrincipal>();
             services.AddDbContext<YettiContext>();
@@ -64,6 +68,7 @@ namespace trelloApi
         {
             if (env.IsDevelopment())
             {
+                
                 app.UseCors(builder =>
                     builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
                 app.UseDeveloperExceptionPage();
@@ -71,6 +76,11 @@ namespace trelloApi
 
 
             }
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>  
+      {  
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");  
+      });  
             app.UseAuthentication();
             app.UseMvc();
         }

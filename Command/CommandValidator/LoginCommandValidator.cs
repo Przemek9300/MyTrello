@@ -12,7 +12,7 @@ namespace trelloApi.Command.CommandValidator
             _userSerivce = userService;
             RuleFor(x => x.Email).NotEmpty().WithMessage(ErrorMessage.EmailEmpty);
             RuleFor(x => x.Email).EmailAddress().WithMessage(ErrorMessage.EmailInvalid);
-            RuleFor(x => x.Email).Must((x, Email)=>_userSerivce.UserExist(Email)).WithMessage(ErrorMessage.EmailExist);
+            RuleFor(x => x.Email).Must((x, Email)=>_userSerivce.UserExist(Email)).WithMessage(ErrorMessage.EmailNotExist);
 
             RuleFor(x => x.Password).Password();
         }
