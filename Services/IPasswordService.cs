@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 
 namespace trelloApi.Services
 {
-    interface IPasswordService
+    public interface IPasswordService
     {
         string GetHash(string password, string salt);
         string GetSalt();
+
+        
     }
 }

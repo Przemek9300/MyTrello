@@ -14,7 +14,7 @@ namespace trelloApi.Command.CommandValidator
 ///////////////////////////////////EMAIL\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
         public static string EmailEmpty = "Email cannot be empty";
         public static string EmailInvalid = "Empty is not valid";
-        public static string EmailExist = "Email not exist";
+        public static string EmailExist = "Email already exist";
 
 
 

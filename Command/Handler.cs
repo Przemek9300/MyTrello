@@ -4,6 +4,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using trelloApi.Domains;
+using trelloApi.DTO;
 using trelloApi.Services;
 
 namespace trelloApi.Command
@@ -15,9 +16,11 @@ namespace trelloApi.Command
 
         public async Task<string> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            User login = new User();
+        
             string tokenString = "";
-            var user = _userService.Authenticate(login);
+            
+            var user = _userService.Authenticate(request);
+
 
             if (user != null)
             {
@@ -31,7 +34,7 @@ namespace trelloApi.Command
 
     }
 
-    public class Register : IRequestHandler<RegisterCommand, string>
+    public class Register : IRequestHandler<RegisterCommand, UserDTO>
     {
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
@@ -41,11 +44,12 @@ namespace trelloApi.Command
             _mapper = mapper;
         }
 
-        public async Task<string> Handle(RegisterCommand request, CancellationToken cancellationToken)
+        public async Task<UserDTO> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
-            var user = _mapper.Map<User>(request);
-            await _userService.RegisterUser(user);
-            return "ok";
+            
+            var userDTO = _mapper.Map<UserDTO>(request);
+            await _userService.RegisterUser(request);
+            return userDTO;
 
 
         }

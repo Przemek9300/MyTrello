@@ -1,5 +1,6 @@
 using System;
 using MediatR;
+using trelloApi.DTO;
 
 namespace trelloApi.Command
 {
@@ -9,7 +10,7 @@ namespace trelloApi.Command
         public string Password { get; set; }
 
     }
-        public class RegisterCommand:IRequest<string>
+        public class RegisterCommand:IRequest<UserDTO>
     {
         public string Email { get; set; }
         public string Password { get; set; }

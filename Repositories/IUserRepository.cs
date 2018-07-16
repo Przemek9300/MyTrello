@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using trelloApi.Command;
 using trelloApi.Domains;
 using trelloApi.DTO;
 
@@ -7,9 +8,11 @@ namespace trelloApi.Repositories
 {
     public interface IUserRepository
     {
-        Task<UserDTO> GetAsync(Guid id);
+        Task<User> GetAsync(Guid id);
         Task Add(User user);
-        UserDTO Get(string email);
+        User Get(string email);
+        string GetSalt(string email);
+        Task SaveAsync();
         
     }
 }

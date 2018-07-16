@@ -38,6 +38,7 @@ namespace trelloApi
             services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>()) ;;
             services.AddTransient<IUserService, UserSerivce>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IPasswordService, PasswordService>();
 
             services.AddMediatR();
             services.AddTransient<ClaimsPrincipal>();
@@ -63,7 +64,8 @@ namespace trelloApi
         {
             if (env.IsDevelopment())
             {
-                app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod());
+                app.UseCors(builder =>
+                    builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
                 app.UseDeveloperExceptionPage();
                 app.UseAuthentication();
 

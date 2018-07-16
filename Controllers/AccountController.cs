@@ -15,7 +15,7 @@ using System.Security.Claims;
 namespace trelloApi.Controllers
 {
     [Produces("application/json")]
-    [Route("api/account")]
+    [Route("api/[controller]")]
     public class AccountController : Controller
     {
 
@@ -26,7 +26,7 @@ namespace trelloApi.Controllers
             _mediator = mediator;
         }
 
-    
+
         [HttpPost]
         public async Task<IActionResult> Post(LoginCommand command)
         {
@@ -57,17 +57,6 @@ namespace trelloApi.Controllers
             result = Ok(new { claims });
             return result;
         }
-         [Route("api/register")]
-        [HttpPost]
-        public IActionResult Register([FromBody] RegisterCommand command)
-        {
-
-           if(ModelState.IsValid){
-               _mediator.Send(command);
-               return Ok(command);
-           }
-           return BadRequest(ModelState);
-        }
     }
-
+       
 }

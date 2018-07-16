@@ -11,7 +11,7 @@ namespace trelloApi.Command.CommandValidator
         public RegisterCommandValidator(IUserService userService)
         {
             _userService = userService;
-            RuleFor(x => x.Email).Empty().WithMessage(ErrorMessage.EmailEmpty);
+            RuleFor(x => x.Email).NotEmpty().WithMessage(ErrorMessage.EmailEmpty);
             RuleFor(x => x.Email).EmailAddress().WithMessage(ErrorMessage.EmailInvalid);
             RuleFor(x => x.Email).Must((x, Email) => !userService.UserExist(Email)).WithMessage(ErrorMessage.EmailExist);
 
