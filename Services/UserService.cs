@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using trelloApi.Command;
 using trelloApi.Domains;
+using trelloApi.DTO;
 using trelloApi.Repositories;
 
 namespace trelloApi.Services
@@ -18,6 +19,8 @@ namespace trelloApi.Services
     {
         private readonly IConfiguration _config;
         private readonly IUserRepository _userRepository;
+
+
         private readonly IPasswordService _passwordService;
         private readonly IMapper _mapper;
         public UserSerivce(IConfiguration configuration, IUserRepository userRepositor, IMapper mapper, IPasswordService passwordService)
@@ -25,6 +28,7 @@ namespace trelloApi.Services
             _mapper = mapper;
             _config = configuration;
             _userRepository = userRepositor;
+
             _passwordService = passwordService;
         }
 
@@ -52,13 +56,13 @@ namespace trelloApi.Services
             {
                 var salt = _userRepository.GetSalt(login.Email);
                 var hash = _passwordService.GetHash(login.Password, salt);
-                if(hash == user.HashPassword)
+                if (hash == user.HashPassword)
                     return user;
-                
 
-                
+
+
             }
-           
+
 
             return null;
         }
@@ -77,15 +81,15 @@ namespace trelloApi.Services
         public async Task RegisterUser(RegisterCommand command)
         {
             var salt = _passwordService.GetSalt();
-            var user = new User() {
-                UserId = Guid.NewGuid(),
+            var user = new User()
+            {
                 Email = command.Email,
                 Salt = salt,
                 HashPassword = _passwordService.GetHash(command.Password, salt),
                 Avatar = ""
-        
+
             };
-            
+
 
             await _userRepository.Add(user);
             await _userRepository.SaveAsync();
@@ -96,10 +100,31 @@ namespace trelloApi.Services
             var user = _userRepository.Get(Email);
             if (user == null)
                 return false;
-                
+
             return true;
         }
 
+        public async Task<UserDTO> GetUserAsync(int Id)
+        {
+            var user = await _userRepository.GetAsync(Id);
+            if (user != null)
+            {
+                var userDTO = _mapper.Map<UserDTO>(user);
+                return userDTO;
+            }
+            return null;
+        }
 
+        public void CreateBoard(Board Board, int userId)
+        {
+            _userRepository.CreateBoard(Board, userId);
+        }
+
+        public List<UserDTO> GetUsers() => _mapper.Map<List<UserDTO>>(_userRepository.GetUsers());
+
+        public async Task SaveAsync()
+        {
+            await _userRepository.SaveAsync();
+        }
     }
 }

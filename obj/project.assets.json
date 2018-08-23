@@ -14680,12 +14680,15 @@
   },
   "project": {
     "version": "1.0.0",
+    "restoreSettings": {
+      "hideWarningsAndErrors": true
+    },
     "restore": {
-      "projectUniqueName": "c:\\Users\\przem\\Documents\\workspace\\trelloApi\\trelloApi.csproj",
+      "projectUniqueName": "C:\\Users\\przem\\Documents\\workspace\\trelloApi\\trelloApi.csproj",
       "projectName": "trelloApi",
-      "projectPath": "c:\\Users\\przem\\Documents\\workspace\\trelloApi\\trelloApi.csproj",
+      "projectPath": "C:\\Users\\przem\\Documents\\workspace\\trelloApi\\trelloApi.csproj",
       "packagesPath": "C:\\Users\\przem\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\przem\\Documents\\workspace\\trelloApi\\obj\\",
+      "outputPath": "C:\\Users\\przem\\Documents\\workspace\\trelloApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -14715,54 +14718,54 @@
     "frameworks": {
       "netcoreapp2.1": {
         "dependencies": {
-          "AutoMapper": {
+          "MediatR.Extensions.Microsoft.DependencyInjection": {
             "target": "Package",
-            "version": "[7.0.1, )"
-          },
-          "AutoMapper.Extensions.Microsoft.DependencyInjection": {
-            "target": "Package",
-            "version": "[4.0.1, )"
-          },
-          "FluentValidation.AspNetCore": {
-            "target": "Package",
-            "version": "[7.6.104, )"
+            "version": "5.0.2"
           },
           "MediatR": {
             "target": "Package",
-            "version": "[5.0.1, )"
+            "version": "5.0.1"
           },
-          "MediatR.Extensions.Microsoft.DependencyInjection": {
+          "AutoMapper.Extensions.Microsoft.DependencyInjection": {
             "target": "Package",
-            "version": "[5.0.2, )"
+            "version": "4.0.1"
           },
-          "Microsoft.AspNetCore.All": {
+          "FluentValidation.AspNetCore": {
             "target": "Package",
-            "version": "[2.1.0, )"
-          },
-          "Microsoft.EntityFrameworkCore.Design": {
-            "target": "Package",
-            "version": "[2.1.1, )"
-          },
-          "Microsoft.EntityFrameworkCore.Sqlite.Core": {
-            "target": "Package",
-            "version": "[2.1.1, )"
-          },
-          "Microsoft.NETCore.App": {
-            "target": "Package",
-            "version": "[2.1.0, )",
-            "autoReferenced": true
+            "version": "7.6.104"
           },
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
             "target": "Package",
-            "version": "[2.1.1, )"
+            "version": "2.1.1"
           },
-          "Newtonsoft.Json": {
+          "Microsoft.EntityFrameworkCore.Design": {
             "target": "Package",
-            "version": "[11.0.2, )"
+            "version": "2.1.1"
+          },
+          "Microsoft.NETCore.App": {
+            "target": "Package",
+            "version": "2.1.0",
+            "autoReferenced": true
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
-            "version": "[3.0.0, )"
+            "version": "3.0.0"
+          },
+          "AutoMapper": {
+            "target": "Package",
+            "version": "7.0.1"
+          },
+          "Microsoft.AspNetCore.All": {
+            "target": "Package",
+            "version": "2.1.0"
+          },
+          "Microsoft.EntityFrameworkCore.Sqlite.Core": {
+            "target": "Package",
+            "version": "2.1.1"
+          },
+          "Newtonsoft.Json": {
+            "target": "Package",
+            "version": "11.0.2"
           }
         },
         "imports": [

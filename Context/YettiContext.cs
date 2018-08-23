@@ -10,7 +10,6 @@ namespace trelloApi.Context
     public class YettiContext : DbContext
     {
         public DbSet<User> Users { get; set; }
-        public DbSet<Group> Groups { get; set; }
 
         public DbSet<Board> Boards { get; set; }
 
@@ -25,20 +24,17 @@ namespace trelloApi.Context
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<GroupUser>()
-          .HasKey(pc => new { pc.UserId, pc.GroupId });
 
-            modelBuilder.Entity<GroupUser>()
-                .HasOne(pc => pc.User)
-                .WithMany(p => p.GroupUser)
-                .HasForeignKey(pc => pc.GroupId);
+            modelBuilder.Entity<User>()
+                .HasMany(c => c.Board)
+                .WithOne(e => e.User)
+                .OnDelete(DeleteBehavior.SetNull);
 
-
-            modelBuilder.Entity<GroupUser>()
-                .HasOne(pc => pc.Group)
-                .WithMany(p => p.GroupUser)
-                .HasForeignKey(pc => pc.UserId);
 
         }
+
+
+
     }
 }
+

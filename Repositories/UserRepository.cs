@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -12,11 +13,9 @@ namespace trelloApi.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly YettiContext _context;
-        private readonly IMapper  _mapper;
         public UserRepository(YettiContext context, IMapper  mapper)
         {
          _context = context;   
-         _mapper = mapper;
         }
 
         async public Task Add(User user)
@@ -24,7 +23,7 @@ namespace trelloApi.Repositories
             await _context.Users.AddAsync(user);
         }
 
-        public async Task<User> GetAsync(Guid id)
+        public async Task<User> GetAsync(int id)
         {
           var user = await _context.Users.FindAsync(id);
            return user;
@@ -51,6 +50,29 @@ namespace trelloApi.Repositories
         public async Task SaveAsync()
         {
             await _context.SaveChangesAsync();
+        }
+
+
+        public async Task AddBoard(Board board, Guid userID)
+        {
+           var user =  await _context.Users.FindAsync(userID);
+           user.Board.Add(board);
+        }
+
+        public List<Board> GetBoard(int userID)
+        {
+            return _context.Boards.Where(x=>x.User.UserId == userID).ToList();
+            
+        }
+
+        public void CreateBoard(Board board, int userId)
+        {
+            _context.Users.First(x=>x.UserId == userId).Board.Add(board);
+        }
+
+        public List<User> GetUsers()
+        {
+            return _context.Users.ToList();
         }
     }
 }

@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
+using trelloApi.Domains;
 
-namespace trelloApi.Domains
+namespace trelloApi.DTO
 {
-    public class Board
+    public class BoardDTO
     {
         public int BoardId { get; set; }
         public string Title { get; set; }
         public User User { get; set; }
-        public List<Table> Table { get; set; }
-        
-    }
+        public List<Table> Table { get; set; }    }
 }

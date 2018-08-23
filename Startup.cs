@@ -35,15 +35,30 @@ namespace trelloApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+
             services.AddAutoMapper();
-            services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>()) ;;
+            services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>()); ;
             services.AddTransient<IUserService, UserSerivce>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IPasswordService, PasswordService>();
-                  services.AddSwaggerGen(c =>  
-      {  
-          c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });  
-      });  
+            services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+    var security = new Dictionary<string, IEnumerable<string>>
+          {
+                    {"Bearer", new string[] { }},
+          };
+    c.AddSecurityDefinition("Bearer", new ApiKeyScheme
+    {
+        Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+        Name = "Authorization",
+        In = "header",
+        Type = "apiKey"
+    });
+    c.AddSecurityRequirement(security);
+
+});
             services.AddMediatR();
             services.AddTransient<ClaimsPrincipal>();
             services.AddDbContext<YettiContext>();
@@ -68,7 +83,7 @@ namespace trelloApi
         {
             if (env.IsDevelopment())
             {
-                
+
                 app.UseCors(builder =>
                     builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
                 app.UseDeveloperExceptionPage();
@@ -77,10 +92,10 @@ namespace trelloApi
 
             }
             app.UseSwagger();
-            app.UseSwaggerUI(c =>  
-      {  
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");  
-      });  
+            app.UseSwaggerUI(c =>
+      {
+          c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+      });
             app.UseAuthentication();
             app.UseMvc();
         }

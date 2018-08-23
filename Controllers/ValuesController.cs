@@ -9,7 +9,7 @@ using MediatR;
 using System.Security.Claims;
 
 namespace trelloApi.Controllers
-{   [Authorize]
+{
     [Route("api/[controller]")]
     public class ValuesController : Controller
 
@@ -22,13 +22,14 @@ namespace trelloApi.Controllers
         }
 
         // GET api/values
-        
+        [AllowAnonymous]
         [HttpGet]
         public string Get()
         {
+         string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            
-            return "test";
+
+            return userId;
         }
 
         // GET api/values/5

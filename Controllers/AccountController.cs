@@ -61,21 +61,7 @@ namespace trelloApi.Controllers
         }
     
 
-        [HttpGet]
-        public IActionResult Get()
-        {
-
-            var claims = User.Claims.Select(x => new { x.Type, x.Value }).ToList();
-
-
-            IActionResult result;
-            if (!User.Identity.IsAuthenticated)
-            {
-                return result = Unauthorized();
-            }
-            result = Ok(new { claims });
-            return result;
-        }
+       
     }
        
 }

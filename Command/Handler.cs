@@ -16,9 +16,9 @@ namespace trelloApi.Command
 
         public async Task<string> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-        
+
             string tokenString = "";
-            
+
             var user = _userService.Authenticate(request);
 
 
@@ -46,7 +46,7 @@ namespace trelloApi.Command
 
         public async Task<UserDTO> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
-            
+
             var userDTO = _mapper.Map<UserDTO>(request);
             await _userService.RegisterUser(request);
             return userDTO;
@@ -56,5 +56,30 @@ namespace trelloApi.Command
 
 
     }
+
+    public class BoardHandler : IRequestHandler<CreateBoardCommand, BoardDTO>
+    {
+        private readonly IUserService _userService;
+        private readonly IMapper _mapper;
+        public BoardHandler(IUserService userService, IMapper mapper)
+        {
+            _userService = userService;
+            _mapper = mapper;
+        }
+
+
+
+        async Task<BoardDTO> IRequestHandler<CreateBoardCommand, BoardDTO>.Handle(CreateBoardCommand request, CancellationToken cancellationToken)
+        {
+            var board = _mapper.Map<Board>(request);
+            var boardDTO = _mapper.Map<BoardDTO>(request);
+
+            _userService.CreateBoard(board, request.UserId);
+            await _userService.SaveAsync();
+            return boardDTO;
+        }
+    }
+
+
 
 }
