@@ -9,3 +9,5 @@
 /.vs/config/applicationhost.config
 /obj/Debug/netcoreapp2.0/trelloApi.assets.cache
 obj/Debug/netcoreapp2.0/trelloApi.csproj.CoreCompileInputs.cache
+obj/Debug/netcoreapp2.0/trelloApi.csprojAssemblyReference.cache
+.gitignore
