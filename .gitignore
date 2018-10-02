@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿
 # Created by https://www.gitignore.io/api/aspnetcore
 
@@ -274,3 +275,24 @@ __pycache__/
 
 
 # End of https://www.gitignore.io/api/aspnetcore
+=======
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/trelloApi/v15
+obj/Debug/netcoreapp2.1/trelloApi.assets.cache
+obj/Debug/netcoreapp2.1/trelloApi.csproj.CoreCompileInputs.cache
+.gitignore
+obj/Debug/netcoreapp2.1/trelloApi.csprojAssemblyReference.cache
+bin/Debug/netcoreapp2.0/trelloApi.dll
+bin/Debug/netcoreapp2.0/trelloApi.pdb
+bin/Debug/netcoreapp2.0/trelloApi.deps.json
+bin/Debug/netcoreapp2.0/trelloApi.runtimeconfig.json
+bin/Debug/netcoreapp2.0/trelloApi.runtimeconfig.dev.json
+bin/Debug/netcoreapp2.1/trelloApi.dll
+bin/Debug/netcoreapp2.1/trelloApi.pdb
+bin/Debug/netcoreapp2.1/trelloApi.deps.json
+bin/Debug/netcoreapp2.1/trelloApi.runtimeconfig.json
+bin/Debug/netcoreapp2.1/trelloApi.runtimeconfig.dev.json
+>>>>>>> przemek
