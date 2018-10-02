@@ -21,6 +21,8 @@ namespace trelloApi.Automapper
             CreateMap<UserDTO, RegisterCommand>();
             CreateMap<RegisterCommand, User>();
             CreateMap<User, RegisterCommand>();
+            CreateMap<CreateBoardCommand, Board>();
+            CreateMap<CreateBoardCommand, BoardDTO>();
 
 
 

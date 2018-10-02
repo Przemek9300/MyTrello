@@ -38,6 +38,7 @@ namespace trelloApi
 
 
             services.AddAutoMapper();
+            services.AddCors();
             services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>()); ;
             services.AddTransient<IUserService, UserSerivce>();
             services.AddTransient<IUserRepository, UserRepository>();

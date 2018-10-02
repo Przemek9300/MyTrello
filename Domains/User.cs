@@ -5,6 +5,10 @@ using System.ComponentModel.DataAnnotations;
 namespace trelloApi.Domains
 {
     public class User{
+        public User()
+        {
+            Board = new List<Board>();
+        }
         [Key]
 
         public int UserId { get; set; }

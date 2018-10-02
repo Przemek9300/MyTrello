@@ -8,6 +8,5 @@ namespace trelloApi.DTO
     {
         public int BoardId { get; set; }
         public string Title { get; set; }
-        public User User { get; set; }
         public List<Table> Table { get; set; }    }
 }

@@ -7,6 +7,7 @@ using trelloApi.Command;
 using trelloApi.Context;
 using trelloApi.Domains;
 using trelloApi.DTO;
+using Microsoft.EntityFrameworkCore;
 
 namespace trelloApi.Repositories
 {
@@ -25,17 +26,20 @@ namespace trelloApi.Repositories
 
         public async Task<User> GetAsync(int id)
         {
-          var user = await _context.Users.FindAsync(id);
-           return user;
+          var user =  _context.Users.Include(x=>x.Board).First(x=>x.UserId == id);
+
+            return user;
         }
 
         public  User Get(string email)
         {
-            var user =  _context.Users.FirstOrDefault(x=>x.Email.ToLower()==email.ToLower());
-            if(user==null)
-                return null;
-            
-            return user;
+            if (!String.IsNullOrEmpty(email))
+            {
+                var user = _context.Users.FirstOrDefault(x => x.Email.ToLower() == email.ToLower());
+                if (user != null)
+                    return user;
+            }
+            return null;
         }
 
         public string GetSalt(string email)
@@ -65,14 +69,26 @@ namespace trelloApi.Repositories
             
         }
 
-        public void CreateBoard(Board board, int userId)
-        {
-            _context.Users.First(x=>x.UserId == userId).Board.Add(board);
-        }
 
         public List<User> GetUsers()
         {
             return _context.Users.ToList();
+        }
+
+        public async Task CreateBoardAsync(Board board, int userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            board.User = user;
+
+            user.Board.Add(board);
+            await _context.Boards.AddAsync(board);
+            _context.Entry(board).State = EntityState.Added;
+
+            _context.Entry(user).State = EntityState.Modified;
+
+
+            
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -10,6 +10,6 @@ namespace trelloApi.DTO
 
         public string Email { get; set; }
         public string Avatar { get; set; }
-        public List<Board> Board { get; set; }
+        public List<BoardDTO> Board { get; set; }
     }
 }

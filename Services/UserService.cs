@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -71,8 +72,8 @@ namespace trelloApi.Services
             return new List<Claim>
         {
 
-        new Claim("Id", user.UserId.ToString()),
-        new Claim("Email", user.Email.ToString()),
+        new Claim("sub", user.UserId.ToString()),
+        new Claim("email", user.Email.ToString()),
 
             //More custom claims
         };
@@ -117,7 +118,7 @@ namespace trelloApi.Services
 
         public void CreateBoard(Board Board, int userId)
         {
-            _userRepository.CreateBoard(Board, userId);
+            _userRepository.CreateBoardAsync(Board, userId);
         }
 
         public List<UserDTO> GetUsers() => _mapper.Map<List<UserDTO>>(_userRepository.GetUsers());
@@ -125,6 +126,15 @@ namespace trelloApi.Services
         public async Task SaveAsync()
         {
             await _userRepository.SaveAsync();
+        }
+
+        public bool BoardIsUnique(CreateBoardCommand command)
+        {
+            var board = _userRepository.GetBoard(command.UserId).FirstOrDefault(x=>x.Title.ToLower()==command.Title.ToLower());
+            if (board == null)
+                return true;
+            return false;
+
         }
     }
 }

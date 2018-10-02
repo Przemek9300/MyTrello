@@ -11,9 +11,13 @@ using trelloApi.Command;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
 using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+using trelloApi.DTO;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace trelloApi.Controllers
 {
+    [Authorize]
     [Produces("application/json")]
     [Route("api/[controller]")]
     public class AccountController : Controller
@@ -21,14 +25,26 @@ namespace trelloApi.Controllers
 
 
         private readonly IMediator _mediator;
-        public AccountController(IMediator mediator)
+        private readonly IUserService _userSerivce;
+
+        public AccountController(IMediator mediator, IUserService userService)
         {
             _mediator = mediator;
+            _userSerivce = userService;
         }
 
 
+        public async Task<IActionResult> GetAsync()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var dto = await _userSerivce.GetUserAsync(int.Parse(userId));
+
+            return Ok(dto);
+        }
+
+        [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<IActionResult> Post(LoginCommand command)
+        public async Task<IActionResult> Post([FromBody]LoginCommand command)
         {
 
             ActionResult response = BadRequest();
@@ -43,8 +59,8 @@ namespace trelloApi.Controllers
             return BadRequest(ModelState);
         }
 
-    
-       [HttpPost("register")]
+        [AllowAnonymous]
+        [HttpPost("register")]
         public async Task<IActionResult> Post(RegisterCommand command)
         {
 
@@ -59,9 +75,36 @@ namespace trelloApi.Controllers
             }
             return BadRequest(ModelState);
         }
-    
 
-       
+
+        [HttpPost("boards")]
+        
+        public async Task<IActionResult> PostBoard([Bind("Title")]CreateBoardCommand command)
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            ModelState.SetModelValue("UserId", new ValueProviderResult(userId));
+
+            command.UserId = int.Parse(userId);
+            if (ModelState.IsValid)
+            {
+                var dto = await _mediator.Send(command);
+                return Ok(dto);
+            }
+
+            
+            return BadRequest(ModelState);
+        }
+        [HttpGet("boards")]
+        public async Task<IActionResult> GetBoardsAsync()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var user  = await _userSerivce.GetUserAsync(int.Parse(userId));
+            return Ok(user.Board);
+
+        }
+
+
+
     }
-       
+
 }

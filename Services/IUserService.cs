@@ -16,7 +16,7 @@ namespace trelloApi.Services
 
         Task RegisterUser(RegisterCommand user);
         bool UserExist(string Email);
-
+        bool BoardIsUnique(CreateBoardCommand command);
         void CreateBoard(Board board, int userId);
         Task SaveAsync();
         List<UserDTO> GetUsers();

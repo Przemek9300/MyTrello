@@ -26,17 +26,14 @@ namespace trelloApi.Controllers
         [HttpGet]
         public string Get()
         {
-         string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-
-            return userId;
+            return "Przemek";
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            return "value";
+            return "vaddlue";
         }
 
         // POST api/values

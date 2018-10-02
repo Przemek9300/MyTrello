@@ -30,7 +30,6 @@ namespace trelloApi.Controllers
         {
             var claims = User.Claims.SingleOrDefault(
         c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")?.Value;
-
             return Ok(_userSerivce.GetUsers());
         }
         [HttpGet("{id}")]
@@ -51,30 +50,9 @@ namespace trelloApi.Controllers
                 return Ok(user.Board);
             return NotFound();
         }
-        [HttpPost("/boards")]
-        public async Task<IActionResult> PostBoard(string name)
-        {
-            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (ModelState.IsValid)
-            {
-                var command = new CreateBoardCommand()
-                {
-                    Title = name,
-                    UserId = int.Parse(userId)
+      
 
-                };
-                _mediator.Send(command);
 
-            }
-            return BadRequest(ModelState);
-        }
-
-        [HttpGet("/boards")]
-        public async Task<IActionResult> GetBoardsAsync()
-        {
-
-            return NotFound();
-        }
 
 
     }

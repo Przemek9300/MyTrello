@@ -10,7 +10,7 @@ namespace trelloApi.Repositories
     public interface IUserRepository
     {
         List<User> GetUsers();
-        void CreateBoard(Board board, int userId);
+        Task CreateBoardAsync(Board board, int userId);
         List<Board> GetBoard(int userID);
         Task<User> GetAsync(int id);
         Task Add(User user);
