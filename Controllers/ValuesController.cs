@@ -3,24 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using trelloApi.Context;
+using MediatR;
+using System.Security.Claims;
 
 namespace trelloApi.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller
+
     {
-        // GET api/values
-        [HttpGet]
-        public IEnumerable<string> Get()
+
+        private readonly IMediator _mediator;
+        public ValuesController(IMediator mediator)
         {
-            return new string[] { "value1", "value2" };
+            _mediator = mediator;
+        }
+
+        // GET api/values
+        [AllowAnonymous]
+        [HttpGet]
+        public string Get()
+        {
+            return "Przemek";
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            return "value";
+            return "vaddlue";
         }
 
         // POST api/values
@@ -33,6 +46,7 @@ namespace trelloApi.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
         {
+
         }
 
         // DELETE api/values/5

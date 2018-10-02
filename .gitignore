@@ -10,4 +10,7 @@
 /obj/Debug/netcoreapp2.0/trelloApi.assets.cache
 obj/Debug/netcoreapp2.0/trelloApi.csproj.CoreCompileInputs.cache
 obj/Debug/netcoreapp2.0/trelloApi.csprojAssemblyReference.cache
+/.vs/trelloApi/v15
+obj/Debug/netcoreapp2.1/trelloApi.assets.cache
+obj/Debug/netcoreapp2.1/trelloApi.csproj.CoreCompileInputs.cache
 .gitignore
