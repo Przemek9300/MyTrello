@@ -3,3 +3,6 @@
 ################################################################################
 
 /.vs/trelloApi/v15
+obj/Debug/netcoreapp2.1/trelloApi.assets.cache
+obj/Debug/netcoreapp2.1/trelloApi.csproj.CoreCompileInputs.cache
+.gitignore
